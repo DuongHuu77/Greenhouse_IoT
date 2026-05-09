@@ -1,0 +1,646 @@
+/* RESET CƠ BẢN – Xóa margin/padding mặc định, chuẩn hóa box model */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =====================================================================
+   LAYOUT CHÍNH CỦA WEBSITE (Grid 3 hàng – 2 cột)
+   - Cột trái: sidebar
+   - Cột phải: header (trên) + main content (dưới)
+   - Hàng cuối: footer full width
+   ===================================================================== */
+body {
+    
+    display: grid;
+    grid-template-columns: 240px 1fr;   /* Sidebar | Content */
+    grid-template-rows: 70px 1fr 60px;  /* Header | Main | Footer */
+    grid-template-areas:
+        "sidebar header"
+        "sidebar main"
+        "footer footer";
+    font-family: Arial, sans-serif;
+}
+
+#title-header {
+    font-size: 30px;
+}
+
+/* =====================================================================
+   HEADER – Thanh topbar
+   ===================================================================== */
+.topbar {
+    grid-area: header;
+    /* Xóa màu nền tĩnh cũ (background: #009900;) thay bằng Gradient */
+    background: linear-gradient(-45deg, #009900, #23d5ab, #0077be, #009900);
+    
+    /* Phóng to nền lên 400% để có chỗ cho hiệu ứng di chuyển */
+    background-size: 400% 400%;
+    
+    /* Gọi Animation: tên là gradientBG, chạy trong 10s, lặp vô hạn */
+    animation: gradientBG 10s ease infinite;
+
+    color: white;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;         
+    justify-content: space-between;
+}
+/* =====================================================================
+   ANIMATION: Hiệu ứng chuyển màu Gradient cho Topbar
+   ===================================================================== */
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+#clock {
+    font-size: 20px;
+    font-weight: bold;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+
+
+/* =====================================================================
+   SIDEBAR – Thanh menu bên trái, full height
+   ===================================================================== */
+
+/* Khung chứa logo – giúp căn giữa logo trong sidebar */
+.logo-box {
+    width: 100%;
+    display: flex;
+    justify-content: center;  
+    align-items: center;      
+    margin-bottom: 20px;
+}
+
+/* Logo HCMUTE trong sidebar */
+#logo-hcmute {
+    width: 100px; 
+    height: auto;
+    display: block;            /* Loại bỏ inline spacing */
+    padding: 8px;
+    background-color: white;   /* Tạo nền trắng nổi bật */
+}
+
+/* Sidebar container */
+.sidebar {
+    grid-area: sidebar;
+    background: #263238;
+    color: #fff;
+    padding: 20px;
+    overflow-y: auto;          /* Cuộn nếu quá dài */
+}
+
+.sidebar h2 {
+    margin-bottom: 20px;
+}
+
+.sidebar ul {
+    list-style: none;          /* Xóa bullet */
+}
+
+.sidebar ul li {
+    margin: 12px 0;
+}
+
+/* Các item menu */
+.sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 8px 10px;
+    display: block;
+    border-radius: 6px;
+}
+
+/* Hover + Active */
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+    background: #37474f;
+}
+
+
+/* =====================================================================
+   MAIN CONTENT – Vùng nội dung dưới header bên phải
+   ===================================================================== */
+.main-content {
+    min-height: calc(100vh - 70px - 60px);
+    grid-area: main;
+    padding: 10px 20px;
+    background: #f4f6f8;
+    overflow-y: auto;          /* Cho phép cuộn khi nội dung dài */
+}
+
+
+/* =====================================================================
+   PAGE SPA – Ẩn/hiện từng trang khi click menu
+   ===================================================================== */
+/* .page { display: none; } — Ẩn nội dung */
+
+.page.active {
+    display: block;            /* Chỉ hiển thị page được kích hoạt */
+}
+
+
+/* =====================================================================
+   FOOTER – Nằm full width hàng cuối
+   ===================================================================== */
+.footer {
+    grid-area: footer;
+    background: #eceff1;
+    display: flex;
+    align-items: center;        /* Căn giữa dọc */
+    justify-content: center;    /* Căn giữa ngang */
+    text-align: center;
+    font-size: 15px;
+    padding: 5px 0;
+}
+
+
+/* =====================================================================
+   CARD TRANG HOME – 4 ô cảm biến trên trang Home
+   ===================================================================== */
+.card {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);   /* 4 cột */
+    gap: 30px;
+    margin-bottom: 20px;
+}
+
+
+/* ===============================================
+   CARD LAYOUT: ICON TRÁI – VALUE PHẢI
+   =============================================== */
+
+.card-item {
+    background: white;
+    padding: 16px;
+    border-radius: 12px;
+    width: 280px;
+    text-align: center; /* Dùng cho largebody & smallbody */
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Dòng trên cùng: icon trái – value phải */
+.card-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;  /* icon + value nằm cạnh nhau bên trái */
+    gap: 40px;                    /* chỉnh khoảng cách nhỏ tùy bạn */
+}
+
+/* Icon trong card */ 
+.card-icon img {
+    width: 80px;
+    height: 80px;
+    margin-left: 30px;
+    background: white;
+}
+
+/* Giá trị cảm biến */
+.card-value {
+    font-size: 28px;
+    font-weight: bold;
+}
+/* Largebody căn giữa */
+.card-largebody {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 4px;
+}
+
+/* Smallbody căn giữa */
+.card-smallbody {
+    font-size: 14px;
+    color: rgb(77, 75, 75);
+}
+
+
+/* Giá trị cảm biến chính */
+#soil, #temperature, #humidity, #light {
+    font-size: 28px;
+    font-weight: bold;
+}
+/*-------------------------model greenhouse---------------------- */
+/* Khung bao ngoài (Chứa cột ảnh bên trái và cột nút bên phải) */
+.model-wrapper {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+/* KHỐI QUAN TRỌNG: Cột trái chứa ảnh và linh kiện */
+.model-view {
+    position: relative;
+    width: 100%;
+    max-width: 850px;      /* có thể đổi tuỳ layout */
+    margin: auto;
+}
+
+/* Ảnh nền nhà kính */
+#model-greenhouse {
+    width: 100%;       /* Luôn full khung chứa */
+    height: auto;
+    display: block;    /* Xóa khoảng trắng thừa */
+    border-radius: 12px;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Acculator (Cột phải chứa nút bấm) */
+.acculator-homepage {
+    width: 30%;        /* Chiếm 30% còn lại */
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* --- ĐỊNH VỊ LINH KIỆN (DÙNG % THAY VÌ PX) --- */
+/* Lưu ý: Tôi đã ước lượng % dựa trên px cũ của bạn.
+   Bạn hãy dùng F12 để tinh chỉnh lại số % cho khớp nhé */
+
+/* 1. QUẠT (Video và Ảnh) */
+.fan-video {
+    position: absolute;
+    width: 10%;
+    top: 2%;
+    left: 88.5%;
+    border-radius: 8px;
+    pointer-events: none; /*khong cho tương tác chuột*/
+    z-index: 10;
+}
+
+/* 2. ĐÈN */
+#light-img-id {
+    position: absolute;
+    width: 20%;
+    top: 15%;
+    left: 36%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* 3. BƠM 1 */
+#pump-img-id {
+    position: absolute;
+    width: 12%;
+    top: 32%;
+    left: 24%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* 4. BƠM 2 */
+#pump-img-id2 {
+    position: absolute;
+    width: 12%;
+    top: 32%;
+    left: 58%;
+    pointer-events: none;
+    z-index: 10;
+}
+
+/* Hiệu ứng ẩn hiện linh kiện */
+.pump-img.show, #light-img-id.show { opacity: 1; }
+.pump-img.hide, #light-img-id.hide { opacity: 0; }
+
+
+/* =====================================================================
+   CHUNG CHO TẤT CẢ PAGE SPA (tiêu đề)
+   ===================================================================== */
+/* Header của mỗi SPA page */
+.page-header {
+    display: flex;
+    justify-content: space-between;   /* Tiêu đề bên trái - nút bên phải */
+    align-items: center;              /* Căn giữa theo chiều dọc */
+    margin-bottom: 20px;
+    padding: 5px 10px;
+}
+
+/* Tăng kích thước nút */
+.page-header .chip {
+    min-width: 150px;
+    font-size: 18px;
+}
+
+/* Tăng kích thước dot + text */
+.page-header .acc-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* Soil moisture bar */
+.soil-bar-container {
+    width: 100%;
+    height: 35px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0 5px 0;
+    position: relative; /* Để định vị tấm che bên trong */
+ 
+    /* Chuyển Gradient ra ngoài khung chứa */
+    background: linear-gradient(to right,
+        #c24b1a, 
+        #b57d63,
+        #8ca3a6,
+        #7dc6e3,
+        #5bb4d1,
+        #0f3147
+    );
+}
+
+/* 2. Thanh trượt: Giờ đóng vai trò là "Tấm che màu xám" */
+#soil-bar-fill {
+    height: 100%;
+    /* Mặc định 100% để che kín hết lúc đầu */
+    width: 100%; 
+    
+    /* Màu xám (trùng màu nền cũ) */
+    background-color: #ddd; 
+    
+    /* Định vị nằm dính về bên PHẢI */
+    position: absolute;
+    right: 0;
+    top: 0;
+    
+    /* Hiệu ứng mượt mà */
+    transition: width 0.4s ease;
+}
+
+.soil-bar-labels,
+.soil-text-zone {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* =====================================================================
+   INDICATOR – Hiển thị trạng thái ON/OFF
+   ===================================================================== */
+.dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 6px;
+}
+
+.offline {
+    background-color: red;
+}
+
+.online {
+    background-color: green;
+}
+
+/* Nút điều khiển quạt / bơm / đèn */
+.chip {
+    background: #009900;
+    color: white;
+    padding: 10px 20px;      /* tăng padding → nút to hơn */
+    font-size: 22px;         /* chữ lớn hơn */
+    border: none;
+    border-radius: 20px;
+    margin-left: 20px;       /* Tăng khoảng cách với chữ ON/OFF */
+    cursor: pointer;
+    transition: 0.2s;
+    white-space: nowrap;     /* tránh bị xuống dòng */
+
+    min-width: 180px;   /* tất cả nút sẽ có chiều rộng tối thiểu giống nhau */
+    text-align: center; /* căn chữ giữa */
+}
+
+.soil-indicator,
+.temp-indicator,
+.light-indicator,
+.humidity-indicator {
+    display: flex;
+    align-items: center;
+    gap: 15px;   /* khoảng cách cố định giữa các phần */
+    margin-bottom: 20px;
+}
+
+.ind-text {
+    width: 40px;    /* cố định chiều rộng để chữ OFF/ON không làm lệch layout */
+    display: inline-block;
+}
+
+.chip:hover {
+    background: #007700;
+}
+
+
+/* =====================================================================
+   BIỂU ĐỒ (CHART)
+   ===================================================================== */
+/* Khung biểu đồ */
+canvas {
+    height: 100% !important;
+    max-height: 510px;
+    margin-top: 10px;
+    background: rgb(252, 252, 252);
+    padding: 10px;
+    border-radius: 12px;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.1);
+}
+
+/* =====================================================================
+   PAGE: SOIL MOISTURE
+   ===================================================================== */
+.soil-indicator {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.soil-chart {
+    margin-top: 10px;
+}
+
+
+/* =====================================================================
+   PAGE: TEMPERATURE
+   ===================================================================== */
+.temp-indicator {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.temp-chart {
+    margin-top: 10px;
+}
+
+
+/* =====================================================================
+   PAGE: HUMIDITY
+   ===================================================================== */
+.humidity-indicator {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.humidity-chart {
+    margin-top: 10px;
+}
+
+
+/* =====================================================================
+   PAGE: LIGHT
+   ===================================================================== */
+.light-indicator {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.Light-chart {
+    margin-top: 10px;
+}
+
+
+/* All pages hidden except active one */
+.page { 
+    display: none;
+}
+
+.page.active {
+    display: block;
+}
+
+/* soil bar */
+.soil-bar-container {
+    width: 100%;
+    height: 35px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin: 20px 0 5px 0;
+    position: relative;
+
+    background: linear-gradient(to right,
+        #c24b1a, 
+        #b57d63,
+        #8ca3a6,
+        #7dc6e3,
+        #5bb4d1,
+        #0f3147
+    );
+}
+
+#soil-bar-fill {
+    height: 100%;
+    width: 100%;     
+    background-color: #ddd; 
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: width 0.4s ease;
+}
+
+.soil-bar-labels,
+.soil-text-zone {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* =====================================================================
+   MOBILE RESPONSIVE STYLES
+   ===================================================================== */
+#menu-toggle {
+    display: none;
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+}
+#menu-toggle:focus {
+    outline: none;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 100;
+}
+.overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+@media (max-width: 768px) {
+    body {
+        grid-template-columns: 0 1fr;
+        grid-template-rows: 70px 1fr 60px;
+        grid-template-areas:
+            "header header"
+            "main main"
+            "footer footer";
+    }
+    .topbar {
+        justify-content: flex-start;
+    }
+    #title-header {
+        margin-left: 10px;
+    }
+    #clock {
+        margin-left: auto;
+    }
+    #menu-toggle {
+        display: block;
+    }
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 240px;
+        height: 100%;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 200;
+    }
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    .model-wrapper {
+        flex-direction: column;
+        align-items: center;
+    }
+    .acculator-homepage {
+        width: 100%;
+        align-items: center;
+    }
+    .card {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+}
+@media (max-width: 480px) {
+    .card {
+        grid-template-columns: 1fr;
+    }
+}

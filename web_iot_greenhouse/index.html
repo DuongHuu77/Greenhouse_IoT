@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>IoT GreenHouse</title>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header class="topbar">
+        <button id="menu-toggle" class="menu-toggle">&#9776;</button>
+        <h1 id="title-header">IOT GREENHOUSE</h1>
+        <span id="clock"></span>
+    </header>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="logo-box">
+            <img src="./image/hcmute_logo.png" id="logo-hcmute" alt="HCMUTE Logo">
+        </div>
+        <h2>Menu</h2>
+        <ul>
+            <li><a href="#" onclick="showPage('page-home')" title="Trang chính">Home</a></li>
+            <li><a href="#" onclick="showPage('page-soil')" title="Biểu đồ Độ ẩm đất">Soil Moisture</a></li>
+            <li><a href="#" onclick="showPage('page-temp')" title="Biểu đồ Nhiệt độ và Độ ẩm không khí">Temperature & Humidity</a></li>
+            <li><a href="#" onclick="showPage('page-light')" title="Biểu đồ Ánh sáng">Light</a></li>
+        </ul>
+    </aside>
+    <div id="overlay" class="overlay"></div>
+
+    <!-- MAIN CONTENT -->
+    <main class="main-content">
+
+        <!-- ================= HOME PAGE ================= -->
+        <div id="page-home" class="page active">
+            <!-- 4 CARDS -->
+            <div class="card">
+
+                <div class="card-item">
+                    <div class="card-row">
+                        <div class="card-icon"><img src="./image/soil_moisture_icon.jpg"></div>
+                        <div id="soil" class="card-value">--%</div>
+                    </div>
+                    <div class="card-largebody">Soil Moisture</div>
+                    <div class="card-smallbody">Độ ẩm trong đất</div>
+                </div>
+
+                <div class="card-item">
+                    <div class="card-row">
+                        <div class="card-icon"><img src="./image/temperature_icon.png"></div>
+                        <div id="temperature" class="card-value">--°C</div>
+                    </div>
+                    <div class="card-largebody">Temperature</div>
+                    <div class="card-smallbody">Nhiệt độ môi trường</div>
+                </div>
+
+                <div class="card-item">
+                    <div class="card-row">
+                        <div class="card-icon"><img src="./image/humidity_icon.jpg"></div>
+                        <div id="humidity" class="card-value">--%</div>
+                    </div>
+                    <div class="card-largebody">Humidity</div>
+                    <div class="card-smallbody">Độ ẩm không khí</div>
+                </div>
+
+                <div class="card-item">
+                    <div class="card-row">
+                        <div class="card-icon"><img src="./image/light_icon.png"></div>
+                        <div id="light" class="card-value">-- lux</div>
+                    </div>
+                    <div class="card-largebody">Light</div>
+                    <div class="card-smallbody">Cường độ ánh sáng</div>
+                </div>
+
+            </div>
+
+            <!-- MODEL + ACCULATOR -->
+            <h2 id="title-model">Mô hình GreenHouse</h2>
+
+            <div class="model-wrapper">
+                <div class="model-view">
+                    <img src="./image/iot_greenhouse_model.png" id="model-greenhouse">
+
+                    <video id="fan-video-id" class="fan-video" autoplay loop muted hidden>
+                        <source src="./image/fan_system_on.mp4" type="video/mp4">
+                    </video>
+
+                    <img id="fan-img-id" class="fan-video" src="./image/fan_system_off.png">
+                    <img id="light-img-id" src="./image/light_off.png">
+                    <img id="pump-img-id" class="pump-img" src="./image/van_off.png">
+                    <img id="pump-img-id2" class="pump-img" src="./image/van_off.png">
+                </div>
+                <div class="acculator-homepage">
+
+                    <!-- PUMP -->
+                    <div class="acc-item">
+                        <span id="soil-dot-home" class="dot offline"></span>
+                        <span id="soil-text-home" class="ind-text">OFF</span>
+                        <button id="pump-home" class="chip">Máy bơm nước</button>
+                    </div>
+
+                    <!-- FAN -->
+                    <div class="acc-item">
+                        <span id="temp-dot-home" class="dot offline"></span>
+                        <span id="temp-text-home" class="ind-text">OFF</span>
+                        <button id="fan-home" class="chip">Quạt</button>
+                    </div>
+
+                    <!-- LIGHT -->
+                    <div class="acc-item">
+                        <span id="light-dot-home" class="dot offline"></span>
+                        <span id="light-text-home" class="ind-text">OFF</span>
+                        <button id="light-home" class="chip">Đèn</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= SOIL PAGE ================= -->
+        <div id="page-soil" class="page">
+            <div class="page-header">
+                <h2>Soil Moisture Chart</h2>
+
+                <div class="acc-item">
+                    <span id="soil-dot-spa" class="dot offline"></span>
+                    <span id="soil-text-spa" class="ind-text">OFF</span>
+                    <button id="pump-spa" class="chip">Máy bơm nước</button>
+                </div>
+            </div>
+            <!-- Gradient Bar Soil Moisture -->
+            <div class="soil-bar-container">
+                <div id="soil-bar-fill"></div>
+            </div>
+
+            <div class="soil-bar-labels">
+                <span>0%</span>
+                <span>20%</span>
+                <span>40%</span>
+                <span>60%</span>
+                <span>80%</span>
+                <span>100%</span>
+            </div>
+
+            <div class="soil-text-zone">
+                <span>Quá khô</span>
+                <span>Quá ẩm</span>
+            </div>
+
+            <canvas id="soil-chart"></canvas>
+        </div>
+
+        <!-- ================= TEMP and HUM PAGE ================= -->
+        <div id="page-temp" class="page">
+            <div class="page-header">
+                <h2>Temperature and Humidity Chart</h2>
+
+                <div class="acc-item">
+                    <span id="temp-dot-spa" class="dot offline"></span>
+                    <span id="temp-text-spa" class="ind-text">OFF</span>
+                    <button id="fan-spa" class="chip">Quạt</button>
+                </div>
+            </div>
+            <canvas id="temp-chart"></canvas>
+        </div>
+
+        <!-- ================= LIGHT PAGE ================= -->
+        <div id="page-light" class="page">
+            <div class="page-header">
+                <h2>Light Chart</h2>
+
+                <div class="acc-item">
+                    <span id="light-dot-spa" class="dot offline"></span>
+                    <span id="light-text-spa" class="ind-text">OFF</span>
+                    <button id="light-spa" class="chip">Đèn</button>
+                </div>
+            </div>
+            <canvas id="light-chart"></canvas>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <small>
+            © <span id="year"></span> IoT Green House <br>
+            By Dương Trương Thái Hữu - Nguyễn Anh Thảo - Nguyễn Đình Thi <br>
+            Email: nguyenanhthao2580@gmail.com
+        </small>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="./function.js"></script>
+
+</body>
+</html>
